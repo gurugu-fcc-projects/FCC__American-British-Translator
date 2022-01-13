@@ -4,23 +4,36 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
 class Translator {
+  americanToBritish(word, index, text) {
+    /* Handle titles */
+    if (index !== text.length - 1 && word.endsWith(".")) {
+      return americanToBritishTitles[word.toLowerCase()]
+        ? word.slice(0, -1)
+        : word;
+    } else if (/\d:\d/.test(word)) {
+      return word.replace(":", ".");
+    } else {
+      /* Handle other words*/
+      const [result] = /\w+/.exec(word);
+
+      if (americanToBritishSpelling.hasOwnProperty(result)) {
+        return word.replace(result, americanToBritishSpelling[result]);
+      } else {
+        return word;
+      }
+    }
+  }
+
   translate(text, locale) {
     const preparedText = text.trim().split(" ");
     console.log(preparedText);
     const processedText = [];
 
-    for (const [i, word] of preparedText.entries()) {
+    for (const [idx, word] of preparedText.entries()) {
       let processedWord = "";
 
       if (locale === "american-to-british") {
-        /* Handle titles */
-        if (i !== preparedText.length - 1 && word.endsWith(".")) {
-          processedWord = americanToBritishTitles[word.toLowerCase()]
-            ? word.slice(0, -1)
-            : word;
-        } else {
-          processedWord = word;
-        }
+        processedWord = this.americanToBritish(word, idx, preparedText);
         // if (americanToBritishSpelling.hasOwnProperty(word)) {
         //   processedText.push(
         //     `<span class="highlight">${americanToBritishSpelling.word}</span>`
