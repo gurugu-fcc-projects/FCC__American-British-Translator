@@ -7,7 +7,7 @@ const translator = new Translator();
 suite("Unit Tests", () => {
   test("Translate 'Mangoes are my favorite fruit.' to British English", (done) => {
     const input = {
-      text: "No Mr. Bond, I expect you to die.",
+      text: "Mangoes are my favorite fruit.",
       locale: "american-to-british",
     };
 
