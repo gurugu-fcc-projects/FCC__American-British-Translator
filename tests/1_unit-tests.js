@@ -10,10 +10,11 @@ suite("Unit Tests", () => {
       text: "Mangoes are my favorite fruit.",
       locale: "american-to-british",
     };
+    const control = `Mangoes are my <span class="highlight">favourite</span> fruit.`;
 
     const result = translator.translate(input.text, input.locale);
 
-    console.log(result);
+    assert.equal(result, control);
 
     done();
   });
