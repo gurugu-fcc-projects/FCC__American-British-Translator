@@ -4,22 +4,41 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
 class Translator {
-  americanToBritish(word, index, text) {
+  britishToAmerican;
+
+  process(word, index, text, locale) {
     /* Handle titles */
-    if (index !== text.length - 1 && word.endsWith(".")) {
+    if (
+      locale === "american-to-british" &&
+      index !== text.length - 1 &&
+      word.endsWith(".")
+    ) {
       return americanToBritishTitles[word.toLowerCase()]
-        ? word.slice(0, -1)
-        : word;
-    } else if (/\d:\d/.test(word)) {
-      return word.replace(":", ".");
-    } else {
+        ? [true, word.slice(0, -1)]
+        : [false, word];
+
+      /* Handle time */
+    } else if (locale === "american-to-british" && /\d:\d{2}/.test(word)) {
+      return [true, word.replace(":", ".")];
+    } else if (locale === "british-to-american" && /\d.\d{2}/.test(word)) {
+      return [true, word.replace(".", ":")];
+
       /* Handle other words*/
+    } else {
       const [result] = /\w+/.exec(word);
 
-      if (americanToBritishSpelling.hasOwnProperty(result)) {
-        return word.replace(result, americanToBritishSpelling[result]);
+      if (
+        locale === "american-to-british" &&
+        americanToBritishSpelling.hasOwnProperty(result)
+      ) {
+        return [true, word.replace(result, americanToBritishSpelling[result])];
+      } else if (
+        locale === "british-to-american" &&
+        britishToAmerican.hasOwnProperty(result)
+      ) {
+        return [true, word.replace(result, britishToAmerican[result])];
       } else {
-        return word;
+        return [false, word];
       }
     }
   }
@@ -29,26 +48,27 @@ class Translator {
     console.log(preparedText);
     const processedText = [];
 
+    // create a dictionary for british-to-american
+    if (locale === "british-to-american") {
+      britishToAmerican = Object.entries(americanToBritishSpelling).reduce(
+        (acc, [key, value]) => (acc[value] = key),
+        {}
+      );
+    }
+
     for (const [idx, word] of preparedText.entries()) {
-      let processedWord = "";
+      const [isProcessed, processedWord] = this.process(
+        word,
+        idx,
+        preparedText,
+        locale
+      );
 
-      if (locale === "american-to-british") {
-        processedWord = this.americanToBritish(word, idx, preparedText);
-        // if (americanToBritishSpelling.hasOwnProperty(word)) {
-        //   processedText.push(
-        //     `<span class="highlight">${americanToBritishSpelling.word}</span>`
-        //   );
-        // } else if (americanToBritishTitles.hasOwnProperty(word)) {
-        //   processedText.push(
-        //     `<span class="highlight">${americanToBritishTitles.word}</span>`
-        //   );
-        // } else {
-        //   processedText.push(word);
-        // }
-      } else {
-      }
-
-      processedText.push(processedWord);
+      processedText.push(
+        isProcessed
+          ? `<span class="highlight">${processedWord}</span>`
+          : processedWord
+      );
     }
 
     return processedText.join(" ");
