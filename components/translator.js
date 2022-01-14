@@ -23,10 +23,26 @@ class Translator {
     } else if (locale === "british-to-american" && /\d.\d{2}/.test(word)) {
       return [true, word.replace(".", ":")];
 
-      /* Handle other words*/
+      /* Handle other words */
     } else {
       const [result] = /\w+/.exec(word);
 
+      if (
+        locale === "american-to-british" &&
+        americanOnly.hasOwnProperty(result)
+      ) {
+        const americanToAmerican = americanOnly[result];
+
+        return americanToBritishSpelling.hasOwnProperty[americanToAmerican]
+          ? [
+              true,
+              word.replace(
+                result,
+                americanToBritishSpelling[americanToAmerican]
+              ),
+            ]
+          : [true, word.replace(result, americanToAmerican)];
+      }
       if (
         locale === "american-to-british" &&
         americanToBritishSpelling.hasOwnProperty(result)
@@ -45,10 +61,9 @@ class Translator {
 
   translate(text, locale) {
     const preparedText = text.trim().split(" ");
-    console.log(preparedText);
     const processedText = [];
 
-    // create a dictionary for british-to-american
+    /* Create a dictionary for british-to-american */
     if (locale === "british-to-american") {
       britishToAmerican = Object.entries(americanToBritishSpelling).reduce(
         (acc, [key, value]) => (acc[value] = key),
