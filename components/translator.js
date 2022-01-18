@@ -32,26 +32,6 @@ class Translator {
     /* Handle other words */
     const [result] = /\w+/.exec(word);
 
-    /* Handle american-to-american */
-    if (locale === "american-to-british" && americanOnly[result]) {
-      const americanToAmerican = americanOnly[result];
-
-      const translation =
-        americanToBritishSpelling[americanToAmerican] ?? americanToAmerican;
-
-      return word.replace(result, this.highlightWord(translation));
-    }
-
-    /* Handle british-to-british */
-    if (locale === "british-to-american" && britishOnly[result]) {
-      const britishToBritish = britishOnly[result];
-
-      const translation =
-        this.britishToAmericanSpelling[britishToBritish] ?? britishToBritish;
-
-      return word.replace(result, this.highlightWord(translation));
-    }
-
     /* Handle american-to-british */
     if (locale === "american-to-british" && americanToBritishSpelling[result]) {
       return word.replace(
@@ -74,6 +54,28 @@ class Translator {
     return word;
   }
 
+  checkSameLanguage(text, locale) {
+    let readyText = text.join(" ");
+
+    for (let i = 0; i < text.length; i++) {
+      for (let j = i + 1; j <= text.length; j++) {
+        const [phrase] = /[a-zA-Z ]+/.exec(text.slice(i, j).join(" "));
+
+        const translation =
+          locale === "british-to-american"
+            ? britishOnly[phrase]
+            : americanOnly[phrase];
+        if (translation) {
+          readyText = text
+            .join(" ")
+            .replace(phrase, `<span class="highlight">${translation}</span>`);
+        }
+      }
+    }
+
+    return readyText;
+  }
+
   translate(text, locale) {
     const preparedText = text.trim().split(" ");
     const processedText = [];
@@ -91,7 +93,7 @@ class Translator {
       processedText.push(processedWord);
     });
 
-    return processedText.join(" ");
+    return this.checkSameLanguage(processedText, locale);
   }
 }
 

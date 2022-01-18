@@ -46,4 +46,32 @@ suite("Unit Tests", () => {
 
     done();
   });
+
+  test("Translate 'Can you toss this in the trashcan for me?' to British English", (done) => {
+    const input = {
+      text: "Can you toss this in the trashcan for me?",
+      locale: "american-to-british",
+    };
+    const output = `Can you toss this in the <span class="highlight">bin</span> for me?`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'The parking lot was full.' to British English", (done) => {
+    const input = {
+      text: "The parking lot was full.",
+      locale: "american-to-british",
+    };
+    const output = `The <span class="highlight">car park</span> was full.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });
