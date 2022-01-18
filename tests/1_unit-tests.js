@@ -88,4 +88,74 @@ suite("Unit Tests", () => {
 
     done();
   });
+
+  test("Translate 'To play hooky means to skip class or work.' to British English", (done) => {
+    const input = {
+      text: "To play hooky means to skip class or work.",
+      locale: "american-to-british",
+    };
+    const output = `To <span class="highlight">bunk off</span> means to skip class or work.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'No Mr. Bond, I expect you to die.' to British English", (done) => {
+    const input = {
+      text: "No Mr. Bond, I expect you to die.",
+      locale: "american-to-british",
+    };
+    const output = `No <span class="highlight">Mr</span> Bond, I expect you to die.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'Dr. Grosh will see you now.' to British English", (done) => {
+    const input = {
+      text: "Dr. Grosh will see you now.",
+      locale: "american-to-british",
+    };
+    const output = `<span class="highlight">Dr</span> Grosh will see you now.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'Lunch is at 12:15 today.' to British English", (done) => {
+    const input = {
+      text: "Lunch is at 12:15 today.",
+      locale: "american-to-british",
+    };
+    const output = `Lunch is at <span class="highlight">12.15</span> today.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'We watched the footie match for a while.' to American English", (done) => {
+    const input = {
+      text: "We watched the footie match for a while.",
+      locale: "british-to-american",
+    };
+    const output = `We watched the <span class="highlight">soccer</span> match for a while.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });
