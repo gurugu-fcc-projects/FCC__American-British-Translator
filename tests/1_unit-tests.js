@@ -74,4 +74,18 @@ suite("Unit Tests", () => {
 
     done();
   });
+
+  test("Translate 'Like a high tech Rube Goldberg machine.' to British English", (done) => {
+    const input = {
+      text: "Like a high tech Rube Goldberg machine.",
+      locale: "american-to-british",
+    };
+    const output = `Like a high tech <span class="highlight">Heath Robinson device</span>.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });

@@ -60,11 +60,11 @@ class Translator {
     for (let i = 0; i < text.length; i++) {
       for (let j = i + 1; j <= text.length; j++) {
         const [phrase] = /[a-zA-Z ]+/.exec(text.slice(i, j).join(" "));
-
         const translation =
           locale === "british-to-american"
-            ? britishOnly[phrase]
-            : americanOnly[phrase];
+            ? britishOnly[phrase.toLowerCase()]
+            : americanOnly[phrase.toLowerCase()];
+
         if (translation) {
           readyText = text
             .join(" ")
