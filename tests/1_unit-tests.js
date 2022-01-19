@@ -200,4 +200,46 @@ suite("Unit Tests", () => {
 
     done();
   });
+
+  test("Translate 'I had a bicky then went to the chippy.' to American English", (done) => {
+    const input = {
+      text: "I had a bicky then went to the chippy.",
+      locale: "british-to-american",
+    };
+    const output = `I had a <span class="highlight">cookie</span> then went to the <span class="highlight">fish-and-chip shop</span>.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'I've just got bits and bobs in my bum bag.' to American English", (done) => {
+    const input = {
+      text: "I've just got bits and bobs in my bum bag.",
+      locale: "british-to-american",
+    };
+    const output = `I've just got <span class="highlight">odds and ends</span> in my <span class="highlight">fanny pack</span>.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'The car boot sale at Boxted Airfield was called off.' to American English", (done) => {
+    const input = {
+      text: "The car boot sale at Boxted Airfield was called off.",
+      locale: "british-to-american",
+    };
+    const output = `The <span class="highlight">swap meet</span> at Boxted Airfield was called off.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });
