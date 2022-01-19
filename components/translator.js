@@ -82,9 +82,12 @@ class Translator {
 
     /* Create a dictionary for british-to-american */
     if (locale === "british-to-american") {
-      britishToAmericanSpelling = Object.entries(
+      this.britishToAmericanSpelling = Object.entries(
         americanToBritishSpelling
-      ).reduce((acc, [key, value]) => (acc[value] = key), {});
+      ).reduce((newDictionary, [key, value]) => {
+        newDictionary[value] = key;
+        return newDictionary;
+      }, {});
     }
 
     preparedText.forEach((word) => {
