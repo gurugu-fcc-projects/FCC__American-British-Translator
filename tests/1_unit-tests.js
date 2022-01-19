@@ -158,4 +158,46 @@ suite("Unit Tests", () => {
 
     done();
   });
+
+  test("Translate 'Paracetamol takes up to an hour to work.' to American English", (done) => {
+    const input = {
+      text: "Paracetamol takes up to an hour to work.",
+      locale: "british-to-american",
+    };
+    const output = `<span class="highlight">Tylenol</span> takes up to an hour to work.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'First, caramelise the onions.' to American English", (done) => {
+    const input = {
+      text: "First, caramelise the onions.",
+      locale: "british-to-american",
+    };
+    const output = `First, <span class="highlight">caramelize</span> the onions.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'I spent the bank holiday at the funfair.' to American English", (done) => {
+    const input = {
+      text: "I spent the bank holiday at the funfair.",
+      locale: "british-to-american",
+    };
+    const output = `I spent the <span class="highlight">public holiday</span> at the <span class="highlight">carnival</span>.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });

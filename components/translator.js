@@ -66,9 +66,10 @@ class Translator {
             : americanOnly[phrase.toLowerCase()];
 
         if (translation) {
-          readyText = text
-            .join(" ")
-            .replace(phrase, `<span class="highlight">${translation}</span>`);
+          readyText = readyText.replace(
+            phrase,
+            `<span class="highlight">${translation}</span>`
+          );
         }
       }
     }
