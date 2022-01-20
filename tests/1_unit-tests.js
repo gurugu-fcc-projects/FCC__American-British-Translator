@@ -242,4 +242,18 @@ suite("Unit Test", () => {
 
     done();
   });
+
+  test("Translate 'Have you met Mrs Kalyani?' to American English", (done) => {
+    const input = {
+      text: "Have you met Mrs Kalyani?",
+      locale: "british-to-american",
+    };
+    const output = `Have you met <span class="highlight">Mrs.</span> Kalyani?`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });

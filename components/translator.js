@@ -5,6 +5,7 @@ const britishOnly = require("./british-only.js");
 
 class Translator {
   britishToAmericanSpelling;
+  britishToAmericanTitles;
 
   highlightWord(word) {
     return `<span class="highlight">${word}</span>`;
@@ -18,6 +19,13 @@ class Translator {
       americanToBritishTitles[word.toLowerCase()]
     ) {
       return this.highlightWord(word.slice(0, -1));
+    }
+
+    if (
+      locale === "british-to-american" &&
+      this.britishToAmericanTitles[word.toLowerCase()]
+    ) {
+      return this.highlightWord(word + ".");
     }
 
     /* Handle time */
@@ -86,6 +94,13 @@ class Translator {
     if (locale === "british-to-american") {
       this.britishToAmericanSpelling = Object.entries(
         americanToBritishSpelling
+      ).reduce((newDictionary, [key, value]) => {
+        newDictionary[value] = key;
+        return newDictionary;
+      }, {});
+
+      this.britishToAmericanTitles = Object.entries(
+        americanToBritishTitles
       ).reduce((newDictionary, [key, value]) => {
         newDictionary[value] = key;
         return newDictionary;
