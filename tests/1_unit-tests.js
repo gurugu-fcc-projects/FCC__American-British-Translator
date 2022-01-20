@@ -284,4 +284,56 @@ suite("Unit Test", () => {
 
     done();
   });
+
+  test("Highlight translation in 'Mangoes are my favorite fruit.", (done) => {
+    const input = {
+      text: "Mangoes are my favorite fruit.",
+      locale: "american-to-british",
+    };
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.include(result, '<span class="highlight">favourite</span>');
+
+    done();
+  });
+
+  test("Highlight translation in 'I ate yogurt for breakfast.", (done) => {
+    const input = {
+      text: "I ate yogurt for breakfast.",
+      locale: "american-to-british",
+    };
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.include(result, '<span class="highlight">yoghurt</span>');
+
+    done();
+  });
+
+  test("Highlight translation in 'We watched the footie match for a while.", (done) => {
+    const input = {
+      text: "We watched the footie match for a while.",
+      locale: "british-to-american",
+    };
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.include(result, '<span class="highlight">soccer</span>');
+
+    done();
+  });
+
+  test("Highlight translation in 'Paracetamol takes up to an hour to work.", (done) => {
+    const input = {
+      text: "Paracetamol takes up to an hour to work.",
+      locale: "british-to-american",
+    };
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.include(result, '<span class="highlight">Tylenol</span>');
+
+    done();
+  });
 });
