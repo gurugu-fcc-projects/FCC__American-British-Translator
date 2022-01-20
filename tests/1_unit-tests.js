@@ -256,4 +256,32 @@ suite("Unit Test", () => {
 
     done();
   });
+
+  test("Translate 'Prof Joyner of King's College, London.' to American English", (done) => {
+    const input = {
+      text: "Prof Joyner of King's College, London.",
+      locale: "british-to-american",
+    };
+    const output = `<span class="highlight">Prof.</span> Joyner of King's College, London.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
+
+  test("Translate 'Tea time is usually around 4 or 4.30.' to American English", (done) => {
+    const input = {
+      text: "Tea time is usually around 4 or 4.30.",
+      locale: "british-to-american",
+    };
+    const output = `Tea time is usually around 4 or <span class="highlight">4:30</span>.`;
+
+    const result = translator.translate(input.text, input.locale);
+
+    assert.equal(result, output);
+
+    done();
+  });
 });

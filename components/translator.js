@@ -34,7 +34,14 @@ class Translator {
     }
 
     if (locale === "british-to-american" && /\d.\d{2}/.test(word)) {
-      return this.highlightWord(word.replace(".", ":"));
+      const [time] = /\d{1,2}.\d{1,2}/.exec(word);
+      const translatedTime = time.replace(".", ":");
+      const highlightedTime = word.replace(
+        time,
+        this.highlightWord(translatedTime)
+      );
+
+      return highlightedTime;
     }
 
     /* Handle other words */
@@ -67,7 +74,7 @@ class Translator {
 
     for (let i = 0; i < text.length; i++) {
       for (let j = text.length; j !== i; j--) {
-        const [phrase] = /[a-zA-Z ]+/.exec(text.slice(i, j).join(" "));
+        const [phrase] = /[a-zA-Z0-9 ]+/.exec(text.slice(i, j).join(" "));
 
         const translation =
           locale === "british-to-american"
