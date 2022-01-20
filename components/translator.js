@@ -58,8 +58,9 @@ class Translator {
     let readyText = text.join(" ");
 
     for (let i = 0; i < text.length; i++) {
-      for (let j = i + 1; j <= text.length; j++) {
+      for (let j = text.length; j !== i; j--) {
         const [phrase] = /[a-zA-Z ]+/.exec(text.slice(i, j).join(" "));
+
         const translation =
           locale === "british-to-american"
             ? britishOnly[phrase.toLowerCase()]
