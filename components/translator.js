@@ -4,8 +4,10 @@ const americanToBritishTitles = require("./american-to-british-titles.js");
 const britishOnly = require("./british-only.js");
 
 class Translator {
-  britishToAmericanSpelling;
-  britishToAmericanTitles;
+  constructor() {
+    this.britishToAmericanSpelling = {};
+    this.britishToAmericanTitles = {};
+  }
 
   highlightWord(word) {
     return `<span class="highlight">${word}</span>`;
