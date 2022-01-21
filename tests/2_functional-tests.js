@@ -28,4 +28,19 @@ suite("Functional Tests", () => {
         done();
       });
   });
+
+  test("Translation with missing text field: POST request to /api/translate", (done) => {
+    chai
+      .request(server)
+      .post("/api/translate")
+      .send({
+        locale: "american-to-british",
+      })
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "error");
+        assert.equal(res.body.error, "Required field(s) missing");
+        done();
+      });
+  });
 });
