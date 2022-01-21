@@ -90,4 +90,22 @@ suite("Functional Tests", () => {
         done();
       });
   });
+
+  test("Translation with text that needs no translation: POST request to /api/translate", (done) => {
+    chai
+      .request(server)
+      .post("/api/translate")
+      .send({
+        text: "Mangoes are my favorite fruit.",
+        locale: "british-to-american",
+      })
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "text");
+        assert.property(res.body, "translation");
+        assert.equal(res.body.text, "Mangoes are my favorite fruit.");
+        assert.equal(res.body.translation, "Everything looks good to me!");
+        done();
+      });
+  });
 });

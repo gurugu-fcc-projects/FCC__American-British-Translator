@@ -122,7 +122,13 @@ class Translator {
       processedText.push(processedWord);
     });
 
-    return this.checkSameLanguage(processedText, locale);
+    const checkedSameLanguage = this.checkSameLanguage(processedText, locale);
+
+    if (!checkedSameLanguage.includes('class="highlight"')) {
+      return "Everything looks good to me!";
+    }
+
+    return checkedSameLanguage;
   }
 }
 
