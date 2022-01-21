@@ -43,4 +43,19 @@ suite("Functional Tests", () => {
         done();
       });
   });
+
+  test("Translation with missing locale field: POST request to /api/translate", (done) => {
+    chai
+      .request(server)
+      .post("/api/translate")
+      .send({
+        text: "Mangoes are my favorite fruit.",
+      })
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "error");
+        assert.equal(res.body.error, "Required field(s) missing");
+        done();
+      });
+  });
 });
