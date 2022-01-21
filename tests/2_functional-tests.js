@@ -74,4 +74,20 @@ suite("Functional Tests", () => {
         done();
       });
   });
+
+  test("Translation with text and invalid locale field: POST request to /api/translate", (done) => {
+    chai
+      .request(server)
+      .post("/api/translate")
+      .send({
+        text: "Mangoes are my favorite fruit.",
+        locale: "chinese-to-korean",
+      })
+      .end((err, res) => {
+        assert.isObject(res);
+        assert.property(res.body, "error");
+        assert.equal(res.body.error, "Invalid value for locale field");
+        done();
+      });
+  });
 });
